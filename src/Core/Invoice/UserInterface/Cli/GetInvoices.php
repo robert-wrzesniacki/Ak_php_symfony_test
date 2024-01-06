@@ -10,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use App\Core\Invoice\Domain\Status\InvoiceStatus;
 
 #[AsCommand(
     name: 'app:invoice:get-by-status-and-amount',
@@ -24,8 +25,12 @@ class GetInvoices extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $status = $input->getArgument('status');
+        $invoiceStatus = InvoiceStatus::from($status);
+        
         $invoices = $this->bus->dispatch(new GetInvoicesByStatusAndAmountGreaterQuery(
-            $input->getArgument('amount')
+            $input->getArgument('amount'),
+            $invoiceStatus,
         ));
 
         /** @var InvoiceDTO $invoice */

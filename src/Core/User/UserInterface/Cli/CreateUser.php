@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Core\Invoice\UserInterface\Cli;
+namespace App\Core\User\UserInterface\Cli;
 
-use App\Core\Invoice\Application\Command\CreateInvoice\CreateInvoiceCommand;
+use App\Core\User\Application\Command\CreateUser\CreateUserCommand;
+
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use App\Core\Invoice\Domain\Exception\InvoiceException;
 
 #[AsCommand(
-    name: 'app:invoice:create',
-    description: 'Dodawanie nowej faktury'
+    name: 'app:user:create',
+    description: 'Dodawanie nowego użytkownika'
 )]
-class CreateInvoice extends Command
+class CreateUser extends Command
 {
     public function __construct(private readonly MessageBusInterface $bus)
     {
@@ -24,9 +24,8 @@ class CreateInvoice extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->bus->dispatch(new CreateInvoiceCommand(
-            $input->getArgument('email'),
-            $input->getArgument('amount')
+        $this->bus->dispatch(new CreateUserCommand(
+            $input->getArgument('email')
         ));
 
         return Command::SUCCESS;
@@ -35,6 +34,5 @@ class CreateInvoice extends Command
     protected function configure(): void
     {
         $this->addArgument('email', InputArgument::REQUIRED);
-        $this->addArgument('amount', InputArgument::REQUIRED);
     }
 }

@@ -14,12 +14,12 @@ bin/console app:invoice:get-by-status-and-amount new 10000
 
 # Do zrobienia
 
-- Rozbuduj encję User dodając do niej parametr pozwalający określić aktywność użytkownika (aktywny/nieaktywny). Stwórz migrację, która utworzy nową kolumnę w bazie danych.
-- Dodaj możliwość tworzenia nowego użytkownika z poziomu CLI. Argumentem jest e-mail. Nowy użytkownik powinien utworzyć się ze statusem nieaktywny.
-- Po utworzeniu użytkownika powinien zostać wysłany e-mail do tego użytkownika z komunikatem "Zarejestrowano konto w systemie. Aktywacja konta trwa do 24h" - chodzi o wykorzystanie interfejsu \App\Common\Mailer\MailerInterface - nie trzeba tworzyć rzeczywistej wysyłki maila.
-- Wprowadź do systemu założenie biznesowe pozwalające tworzyć faktury tylko dla aktywnych użytkowników i napisz testy udowadniające, że tak jest.
-- W systemie jest błąd. CLI Command "app:invoice:get-by-status-and-amount" z jakiegoś powodu zwraca wszystkie nowe faktury ignorując argument statusu i kwoty. Znajdź przyczyny i rozwiąż ten problem
-- Stwórz CLI Command do pobierania e-maili nieaktywnych użytkowników.
+<!-- - Rozbuduj encję User dodając do niej parametr pozwalający określić aktywność użytkownika (aktywny/nieaktywny). Stwórz migrację, która utworzy nową kolumnę w bazie danych. -->
+<!-- - Dodaj możliwość tworzenia nowego użytkownika z poziomu CLI. Argumentem jest e-mail. Nowy użytkownik powinien utworzyć się ze statusem nieaktywny. -->
+<!-- - Po utworzeniu użytkownika powinien zostać wysłany e-mail do tego użytkownika z komunikatem "Zarejestrowano konto w systemie. Aktywacja konta trwa do 24h" - chodzi o wykorzystanie interfejsu \App\Common\Mailer\MailerInterface - nie trzeba tworzyć rzeczywistej wysyłki maila. -->
+<!-- - Wprowadź do systemu założenie biznesowe pozwalające tworzyć faktury tylko dla aktywnych użytkowników i napisz testy udowadniające, że tak jest. -->
+<!-- - W systemie jest błąd. CLI Command "app:invoice:get-by-status-and-amount" z jakiegoś powodu zwraca wszystkie nowe faktury ignorując argument statusu i kwoty. Znajdź przyczyny i rozwiąż ten problem -->
+<!-- - Stwórz CLI Command do pobierania e-maili nieaktywnych użytkowników. -->
 
 ## Uruchomienie aplikacji
 Aplikacja posiada konfigurację obrazów dockerowych 
@@ -38,3 +38,14 @@ docker exec -it {CONTAINER ID} bash
 ```
 bin/phpunit tests/Unit/
 ```
+
+
+## MySQL
+
+mysql -u ak_invoice -p
+ak_invoice123
+use ak_invoice
+show tables
+
+## New Command
+bin/console app:user:get-inactive-users
